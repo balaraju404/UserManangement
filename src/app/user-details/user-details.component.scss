@@ -1,0 +1,14 @@
+/* Add this to your component's SCSS file */
+
+.pagination {
+    margin: 0; /* Reset default margin */
+  }
+  
+  .page-link {
+    cursor: pointer; /* Change cursor to pointer for buttons */
+  }
+  
+  .page-item.disabled .page-link {
+    opacity: 0.5; /* Reduce opacity for disabled buttons */
+  }
+  

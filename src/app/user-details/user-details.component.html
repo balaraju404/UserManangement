@@ -1,0 +1,128 @@
+<div class="container mt-4">
+  <!-- Filter Form -->
+  <div class="row">
+    <div class="col-md-10">
+      <form #filterForm="ngForm" (ngSubmit)="onFilter(filterForm.value)" class="row form-inline">
+        <!-- Sort By -->
+        <div class="col-sm-3 form-group mr-2">
+          <div class="input-group">
+            <select name="sortBy" id="sortBy" ngModel class="custom-select form-control">
+              <option value="" disabled selected hidden>Sort By</option>
+              <option value="name">Name</option>
+              <option value="email">Email</option>
+              <option value="phno">Phone Number</option>
+              <option value="status">Status</option>
+            </select>
+          </div>
+        </div>
+        <!-- Sort Order -->
+        <div class="col-sm-3 form-group mr-2">
+          <div class="input-group">
+            <select name="sortOrder" id="sortOrder" ngModel class="custom-select form-control">
+              <option value="" disabled selected hidden>Sort Order</option>
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
+          </div>
+        </div>
+        <!-- Search Input -->
+        <div class="col-sm-4 form-group mr-2">
+          <input type="text" class="form-control" name="searchValue" placeholder="Search" ngModel required>
+        </div>
+        <!-- Apply Button -->
+        <div class="col-sm-2 form-group">
+          <button type="submit" class="btn btn-outline-secondary">Apply</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- User Table -->
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Password</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of currentPageUsers; let i=index">
+            <td>{{ (currentPage - 1) * pageLimit + i + 1 }}</td>
+            <td>
+              <ng-container *ngIf="!isEditing(i); else editName">
+                {{ user.name }}
+              </ng-container>
+              <ng-template #editName>
+                <input type="text" [value]="user.name" (blur)="user.name = $event.target.value" class="form-control" />
+              </ng-template>
+            </td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phno }}</td>
+            <td>
+              <ng-container *ngIf="!isEditing(i); else editPassword">
+                {{ user.password | shortenString }}
+              </ng-container>
+              <ng-template #editPassword>
+                <input type="text" [value]="user.password" (blur)="user.password = $event.target.value" class="form-control" />
+              </ng-template>
+            </td>
+            <td>
+              <button type="button" class="btn btn-sm btn-success" *ngIf="!user.status"
+                (click)="changeStatus(user._id, !user.status)">
+                Approved
+              </button>
+              <button type="button" class="btn btn-danger" *ngIf="user.status"
+                (click)="changeStatus(user._id, !user.status)">
+                Revoke
+              </button>
+            </td>
+            <td>
+              <button *ngIf="!isEditing(i)" class="btn btn-sm btn-outline-secondary" (click)="onEdit(i)">Edit</button>
+              <ng-container *ngIf="isEditing(i)">
+                <button class="btn btn-sm btn-outline-secondary"
+                  (click)="onUpdate(user._id, user.name, user.password)">Update</button>
+                <button class="btn btn-sm btn-outline-danger" (click)="onDelete(user._id)">Delete</button>
+                <button class="btn btn-sm btn-close" (click)="onClose()"></button>
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="row mt-4" *ngIf="totalPages > 1">
+    <div class="col-md-12 text-center">
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <!-- Previous Button -->
+          <li class="page-item" [class.disabled]="currentPage <= 1">
+            <button class="page-link" (click)="onPreviousPage()" [disabled]="currentPage <= 1">Previous</button>
+          </li>
+          <!-- Page Numbers -->
+          <li class="page-item" *ngFor="let page of totalPagesArray" [class.active]="page === currentPage">
+            <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
+          </li>
+          <!-- Ellipsis for Large Number of Pages -->
+          <li *ngIf="totalPagesArray[totalPagesArray.length - 1] < totalPages" class="page-item disabled">
+            <span class="page-link">...</span>
+          </li>
+          <!-- Next Button -->
+          <li class="page-item" [class.disabled]="currentPage >= totalPages">
+            <button class="page-link" (click)="onNextPage()" [disabled]="currentPage >= totalPages">Next</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<app-pop-up></app-pop-up>
