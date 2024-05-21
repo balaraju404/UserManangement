@@ -4,7 +4,8 @@ import { BehaviorSubject } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
-    private baseUrl = 'http://localhost:3000';
+    // private baseUrl = 'http://localhost:3001';
+    private baseUrl = 'https://user-mongo-api.vercel.app';
 
     users = new BehaviorSubject<any>([]);
 

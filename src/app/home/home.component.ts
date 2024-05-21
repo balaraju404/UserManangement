@@ -7,6 +7,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
+  dropDownStatus = false;
+
   constructor(private router: Router) { }
 
   ngOnInit() {
@@ -19,5 +22,9 @@ export class HomeComponent implements OnInit {
   onLogout() {
     localStorage.removeItem('admin');
     this.router.navigate(['/admin-login']);
+  }
+
+  onDropDown() {
+    this.dropDownStatus = !this.dropDownStatus;
   }
 }
