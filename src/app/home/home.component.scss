@@ -1,0 +1,87 @@
+@media (min-width: 970px) {
+    #navbar {
+        display: flex;
+    }
+
+    .sidebar {
+        display: none;
+    }
+}
+
+@media (max-width: 970px) {
+    #navbar {
+        display: none;
+    }
+
+    /* Sidebar Styling */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        /* Initially hide the sidebar off the screen */
+        width: 250px;
+        height: 100%;
+        background-color: #333;
+        transition: left 0.3s ease;
+        /* Smooth transition for opening/closing */
+        z-index: 1000;
+        /* Ensure sidebar stays above other content */
+        display: flex;
+        flex-direction: column;
+        /* Change flex direction to column */
+    }
+
+    .sidebar-header {
+        padding: 10px;
+        background-color: #222;
+    }
+
+    .sidebar-header h3 {
+        color: #fff;
+        margin: 0;
+    }
+
+    .nav-item {
+        padding: 10px;
+    }
+
+    .nav-link {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .nav-link:hover {
+        color: #ccc;
+    }
+
+    .btn-close {
+        color: #fff;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .btn-close:hover {
+        color: #ccc;
+    }
+
+    .btn-logout {
+        margin-top: auto;
+        /* Push logout button to bottom */
+    }
+
+    /* Animation for opening and closing sidebar */
+    .sidebar-open {
+        left: 0;
+    }
+
+    /* Main Content */
+    .main-content {
+        transition: margin-top 0.3s ease;
+        /* Smooth transition for content */
+        margin-top: 0;
+        /* Remove any margin */
+    }
+
+}

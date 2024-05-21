@@ -24,7 +24,13 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/admin-login']);
   }
 
-  onDropDown() {
+  toggleSidebar() {
     this.dropDownStatus = !this.dropDownStatus;
+    const sidebar = document.getElementById("sidebar");
+    if (this.dropDownStatus) {
+      sidebar.classList.add("sidebar-open");
+    } else {
+      sidebar.classList.remove("sidebar-open");
+    }
   }
 }

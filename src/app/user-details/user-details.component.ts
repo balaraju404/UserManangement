@@ -47,8 +47,8 @@ export class UserDetailsComponent implements OnInit {
     const user = { status: status };
     const statusMsg = status ? 'Activated' : 'Deactivated';
     this.adminService.updateUser(id, user).subscribe(
-      () => {
-        console.log(`User ${statusMsg}!`);
+      (res) => {
+        console.log(`User ${statusMsg}!`,res);
         this.handleUserUpdate();
         this.popUpService.successMsg.next(`User ${statusMsg}`);
       },
